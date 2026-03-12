@@ -15,6 +15,11 @@ class SplashScreen extends StatelessWidget {
           ),
         ),
       ),
+      bottomNavigationBar: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: FilledButton(onPressed: () {}, child: Text("Get Started")),
+          )),
     );
   }
 }
