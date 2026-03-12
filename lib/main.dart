@@ -1,22 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:habit_formation/ui/splash_screen.dart';
+import 'package:habit_formation/app_router.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  MyApp({super.key});
+  final _appRouter = AppRouter();
+
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       title: "Habit Formation Tool",
       theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple)
       ),
-      home: SplashScreen(),
+      routerConfig: _appRouter.config(),
     );
   }
 }
