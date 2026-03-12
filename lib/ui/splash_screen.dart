@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:habit_formation/component/bold_text_widget.dart';
+import 'package:habit_formation/ui/home_screen.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
@@ -18,7 +19,10 @@ class SplashScreen extends StatelessWidget {
       bottomNavigationBar: SafeArea(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: FilledButton(onPressed: () {}, child: Text("Get Started")),
+            child: FilledButton(onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (buildContext) => HomeScreen()));
+            }, child: Text("Get Started")),
           )),
     );
   }

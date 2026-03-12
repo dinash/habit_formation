@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: "Habit Formation Tool",
       theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.tealAccent)
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple)
       ),
       home: SplashScreen(),
     );
