@@ -37,6 +37,7 @@ dependencies:
 
   #Auto route for handling annotation based routing
   auto_route: ^11.1.0
+  intl: ^0.20.2
 
 
 dev_dependencies:

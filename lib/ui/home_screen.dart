@@ -1,5 +1,6 @@
-import 'package:auto_route/annotations.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:habit_formation/app_router.gr.dart';
 
 @RoutePage()
 class HomeScreen extends StatelessWidget {
@@ -25,7 +26,9 @@ class HomeScreen extends StatelessWidget {
               ),
               Expanded(
                 child: FilledButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    AutoRouter.of(context).navigate(AddHabitRoute());
+                  },
                   child: Text("Track New Habit"),
                 ),
               ),
