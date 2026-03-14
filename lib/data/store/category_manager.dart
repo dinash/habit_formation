@@ -18,9 +18,11 @@ class CategoryManager {
       await insertDefaultCategory();
       return getAllCategory();
     }
-    await Future.delayed(Duration(seconds: 5 ));
     return Future.value(all);
-    // return Future.error("something wrong");
+  }
+
+  Future<CategoryEntity> findCategoryById(int id) async {
+    return categoryBox.get(id) ?? Future.error("Category not found");
   }
 
   Future<List<int>> insertDefaultCategory() async {
