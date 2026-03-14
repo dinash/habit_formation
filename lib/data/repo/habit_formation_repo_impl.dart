@@ -5,7 +5,7 @@ import 'package:habit_formation/domain/mapper/category_entity_to_model.dart';
 import 'package:habit_formation/domain/model/category_model.dart';
 import 'package:injectable/injectable.dart';
 
-@injectable
+@Injectable(as: HabitFormationRepo)
 class HabitFormationRepoImpl extends HabitFormationRepo {
   CategoryManager categoryManager;
   CategoryEntityToModel mapper;

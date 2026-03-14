@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:habit_formation/data/repo/habit_formation_repo_impl.dart';
+import 'package:habit_formation/domain/habit_formation_repo.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../domain/model/category_model.dart';
@@ -10,7 +10,7 @@ part 'states/category_selection_states.dart';
 @injectable
 class CategorySelectionBloc
     extends Bloc<CategorySelectionEvent, CategorySelectionState> {
-  HabitFormationRepoImpl repo;
+  HabitFormationRepo repo;
 
   CategorySelectionBloc({required this.repo})
     : super(CategorySelectionLoading()) {
