@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:habit_formation/domain/habit_formation_repo.dart';
 import 'package:habit_formation/domain/model/category_model.dart';
+import 'package:habit_formation/domain/model/habit_model.dart';
+import 'package:habit_formation/injection/getit_setup.dart';
 import 'package:habit_formation/ui/category_selection_screen.dart';
 import 'package:intl/intl.dart';
 
@@ -104,7 +107,16 @@ class _AddNewHabitFormState extends State<AddNewHabitForm> {
       ),
       bottomNavigationBar: SafeArea( child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
-        child: FilledButton(onPressed: (){}, child: Text("Save Habit")),
+        child: FilledButton(
+            onPressed: () {
+              if (_currentCategory != null) {
+                final habitModel = HabitModel(category: _currentCategory!,
+                    startDate: _currentStartDate,
+                    endDate: _currentEndDate);
+                getIt<HabitFormationRepo>().addHabit(habitModel);
+                Navigator.pop(context);
+              }
+            }, child: Text("Save Habit")),
       )),
     );
   }

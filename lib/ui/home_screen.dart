@@ -1,6 +1,16 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:habit_formation/app_router.gr.dart';
+import 'package:habit_formation/component/generic_error_widget.dart';
+import 'package:habit_formation/domain/model/habit_model.dart';
+import 'package:habit_formation/injection/getit_setup.dart';
+import 'package:habit_formation/ui/home_screen/events/home_screen_events.dart';
+import 'package:habit_formation/ui/home_screen/home_screen_bloc.dart';
+
+import '../component/bold_text_widget.dart';
+import '../component/bottom_sheet_circular_loader.dart';
+import 'home_screen/states/home_screen_states.dart';
 
 @RoutePage()
 class HomeScreen extends StatelessWidget {
@@ -10,10 +20,53 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text("Habit Tracker")),
-      body: Center(
-        child: Text(
-          "Here the list of habit that we wish to track will be shown.",
-        ),
+      body: BlocBuilder(
+          bloc: getIt<HomeScreenBloc>()
+            ..add(HomeScreenEvents.loadHabits()),
+          builder: (BuildContext buildContext, HomeScreenStates state) {
+            return state.when(loading: () {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            }, loaded: (habitStream) {
+              return StreamBuilder(
+                stream: habitStream,
+                builder: (BuildContext streamBuildContext,
+                    AsyncSnapshot<List<HabitModel>> snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return BottomSheetCircularLoader();
+                  }
+                  else if (snapshot.hasData) {
+                    List<HabitModel> habits = snapshot.data?.toList() ??
+                        List.empty();
+                    return ListView(
+                      shrinkWrap: true,
+                      children: ListTile.divideTiles(
+                        context: context,
+                        tiles: habits.map(
+                              (habit) =>
+                              ListTile(
+                                title: BoldTextWidget(
+                                    text: habit.category.name),
+                                onTap: () {
+
+                                },
+                              ),
+                        ),
+                      ).toList(),
+                    );
+                  }
+                  else {
+                    return SafeArea(
+                      child: GenericErrorWidget(),
+                    );
+                  }
+                },
+              );
+            }, error: (errorMessage) {
+              return GenericErrorWidget();
+            });
+          }
       ),
       bottomNavigationBar: SafeArea(
         child: Padding(
