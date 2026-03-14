@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:habit_formation/data/entity/category_entity.dart';
+import 'package:habit_formation/domain/model/category_model.dart';
 import 'package:habit_formation/ui/category_selection_screen.dart';
 import 'package:intl/intl.dart';
 
@@ -14,7 +14,7 @@ class _AddNewHabitFormState extends State<AddNewHabitForm> {
   var _currentStartDate = DateTime.now();
 
   DateTime get _currentEndDate => _currentStartDate.add(Duration(days: 21));
-  CategoryEntity? _currentCategory;
+  CategoryModel? _currentCategory;
 
   String get _currentStartDateAsString => formatDateTime(_currentStartDate);
 
@@ -49,7 +49,7 @@ class _AddNewHabitFormState extends State<AddNewHabitForm> {
                   child: OutlinedButton(
                     onPressed: () async {
                       final selectedCategory =
-                          await showModalBottomSheet<CategoryEntity>(
+                          await showModalBottomSheet<CategoryModel>(
                             context: context,
                             builder: (buildContext) =>
                                 CategorySelectionScreen(),

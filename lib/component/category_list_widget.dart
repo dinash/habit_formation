@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:habit_formation/domain/model/category_model.dart';
 
-import '../data/entity/category_entity.dart';
 import 'bold_text_widget.dart';
 
 class CategoryListWidget extends StatelessWidget {
   const CategoryListWidget({super.key, required this.categories});
 
-  final List<CategoryEntity> categories;
+  final List<CategoryModel> categories;
 
   @override
   Widget build(BuildContext context) {

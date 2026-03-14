@@ -18,7 +18,9 @@ class CategoryManager {
       await insertDefaultCategory();
       return getAllCategory();
     }
+    await Future.delayed(Duration(seconds: 5 ));
     return Future.value(all);
+    // return Future.error("something wrong");
   }
 
   Future<List<int>> insertDefaultCategory() async {
