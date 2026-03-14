@@ -1,4 +1,4 @@
-import '../../../domain/model/category_model.dart';
+part of '../category_selection_bloc.dart';
 
 sealed class CategorySelectionState {}
 

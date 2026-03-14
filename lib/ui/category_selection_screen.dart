@@ -6,8 +6,6 @@ import '../component/bottom_sheet_circular_loader.dart';
 import '../component/category_list_widget.dart';
 import '../component/generic_error_widget.dart';
 import 'category_selection/category_selection_bloc.dart';
-import 'category_selection/events/category_selection_events.dart';
-import 'category_selection/states/category_selection_states.dart';
 
 class CategorySelectionScreen extends StatelessWidget {
   const CategorySelectionScreen({super.key});
