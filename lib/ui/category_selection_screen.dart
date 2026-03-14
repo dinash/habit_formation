@@ -12,7 +12,7 @@ class CategorySelectionScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(future: getId<CategoryManager>().getAllCategory(),
+    return FutureBuilder(future: getIt<CategoryManager>().getAllCategory(),
         builder: (BuildContext buildContext,
             AsyncSnapshot<List<CategoryEntity>> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {

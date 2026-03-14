@@ -6,7 +6,7 @@ import 'package:habit_formation/injection/getit_setup.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   configureDependencies();
-  getId<HabitFormationStore>().createStore();
+  getIt<HabitFormationStore>().createStore();
   runApp(MyApp());
 }
 
