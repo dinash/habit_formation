@@ -37,7 +37,22 @@ dependencies:
 
   #Auto route for handling annotation based routing
   auto_route: ^11.1.0
+
+  #Added for DateFormater
   intl: ^0.20.2
+
+  #For ORM database handling
+  objectbox: ^5.2.0
+  objectbox_flutter_libs: ^5.2.0
+
+  #Required to get platform specific internal paths & directories
+  path_provider: ^2.1.5
+
+  #For handling platform specific path appends
+  path: ^1.9.1
+
+  get_it: ^9.2.1
+
 
 
 dev_dependencies:
@@ -49,6 +64,8 @@ dev_dependencies:
 
   #To generate the route classes for the screen annotated with @RoutePage()
   auto_route_generator: ^10.5.0
+
+  objectbox_generator: ^5.2.0
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

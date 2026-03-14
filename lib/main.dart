@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:habit_formation/app_router.dart';
+import 'package:habit_formation/data/store/habit_formation_store.dart';
+import 'package:habit_formation/injection/getit_setup.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
+  configureDependencies();
+  getId<HabitFormationStore>().createStore();
   runApp(MyApp());
 }
 
