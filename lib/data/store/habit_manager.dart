@@ -32,12 +32,7 @@ class HabitManager {
       order = Order.descending;
     }
     if(field == HabitEntity_.category){
-      return _habitBox
-          .query()
-          .watch(triggerImmediately: true)
-          .map((query) {
-            return query.find()..sort((a, b) => (a.category.target?.name ?? "").compareTo(b.category.target?.name ?? ""));
-          });
+      return sortByCategory(order);
     }
 
     return _habitBox
@@ -45,6 +40,27 @@ class HabitManager {
         .order(field, flags: order)
         .watch(triggerImmediately: true)
         .map((query) => query.find());
+  }
+
+  Stream<List<HabitEntity>> sortByCategory(int order) {
+    return _habitBox
+        .query()
+        .watch(triggerImmediately: true)
+        .map((query) {
+      return query.find()
+        ..sort((firstElement, secondElement) {
+          if (order == Order.descending) {
+            return sortBy(secondElement, firstElement);
+          } else {
+            return sortBy(firstElement, secondElement);
+          }
+        });
+        });
+  }
+
+  int sortBy(HabitEntity b, HabitEntity a) {
+    return (b.category.target?.name ?? "").compareTo(
+        a.category.target?.name ?? "");
   }
 
   Stream<List<HabitEntity>> getAllHabitSortedByDate(){

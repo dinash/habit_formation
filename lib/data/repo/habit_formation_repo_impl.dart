@@ -8,6 +8,7 @@ import 'package:habit_formation/domain/habit_formation_repo.dart';
 import 'package:habit_formation/domain/mapper/category_entity_to_model.dart';
 import 'package:habit_formation/domain/model/category_model.dart';
 import 'package:habit_formation/domain/model/daily_status_model.dart';
+import 'package:habit_formation/domain/model/sort_type.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../domain/model/habit_model.dart';
@@ -46,8 +47,8 @@ class HabitFormationRepoImpl extends HabitFormationRepo {
   }
 
   @override
-  Stream<List<HabitModel>> getAllHabits() {
-    return habitManager.getAllHabit().map((list) =>
+  Stream<List<HabitModel>> getAllHabits(SortType sortType) {
+    return habitManager.getAllHabit(sortType: sortType).map((list) =>
         list.map((entity) {
           var startDate = entity.startDate;
           var endDate = entity.endDate;

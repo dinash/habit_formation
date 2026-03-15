@@ -10,13 +10,13 @@ class HomeScreenBloc extends Bloc<HomeScreenEvents, HomeScreenStates> {
 
   HomeScreenBloc({required this.repo}) : super(HomeScreenStates.loading()) {
     on<HomeScreenEvents>((event, emit) {
-      event.map(loadHabits: (loadHabits) async => _getAllHabits(emit));
+      event.map(loadHabits: (loadHabits) async => _getAllHabits(event, emit));
     });
   }
 
-  void _getAllHabits(Emitter<HomeScreenStates> emit) {
+  void _getAllHabits(HomeScreenEvents events, Emitter<HomeScreenStates> emit) {
     try {
-      final habits = repo.getAllHabits();
+      final habits = repo.getAllHabits(events.sortType);
       emit(HomeScreenStates.loaded(habits));
     } catch (error) {
       emit(HomeScreenStates.error(error.toString()));

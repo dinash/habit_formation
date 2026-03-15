@@ -10,7 +10,7 @@ abstract class SortType with _$SortType {
   }) = _SortType;
 
   factory SortType.defaultSort() => SortType(
-    sortField: SortField.byCategory,
+    sortField: SortField.byAddedDate,
     sortOrder: SortOrder.ascending,
   );
 }

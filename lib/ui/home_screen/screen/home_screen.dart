@@ -5,6 +5,7 @@ import 'package:habit_formation/app_router.gr.dart';
 import 'package:habit_formation/component/generic_error_widget.dart';
 import 'package:habit_formation/data/category_list.dart';
 import 'package:habit_formation/domain/model/habit_model.dart';
+import 'package:habit_formation/domain/model/sort_type.dart';
 import 'package:habit_formation/injection/getit_setup.dart';
 import 'package:habit_formation/ui/home_screen/events/home_screen_events.dart';
 import 'package:habit_formation/ui/home_screen/home_screen_bloc.dart';
@@ -12,6 +13,7 @@ import 'package:habit_formation/ui/util/category_ui_model.dart';
 
 import '../../../component/bold_text_widget.dart';
 import '../../../component/bottom_sheet_circular_loader.dart';
+import '../../util/sort_util.dart';
 import '../states/home_screen_states.dart';
 
 @RoutePage()
@@ -20,11 +22,12 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var homeScreenBloc = getIt<HomeScreenBloc>();
     return Scaffold(
       appBar: AppBar(title: Text("Habit Tracker")),
       body: BlocBuilder(
-          bloc: getIt<HomeScreenBloc>()
-            ..add(HomeScreenEvents.loadHabits()),
+          bloc: homeScreenBloc
+            ..add(HomeScreenEvents.loadHabits(SortType.defaultSort())),
           builder: (BuildContext buildContext, HomeScreenStates state) {
             return state.when(loading: () {
               return Center(
@@ -80,6 +83,25 @@ class HomeScreen extends StatelessWidget {
           ),
         ),
       ),
+      floatingActionButton: FloatingActionButton(onPressed: () async {
+        final selectedFilter = await showModalBottomSheet(
+            context: context, builder: (context) {
+          return SafeArea(
+            child: ListView.builder(
+                shrinkWrap: true,
+                itemCount: sortTypes.length,
+                itemBuilder: (BuildContext context, int position) {
+                  var first2 = sortTypes[position].values.first;
+                  return ListTile(
+                      title: BoldTextWidget(text: first2),
+                      onTap: () {
+                        Navigator.pop(context, sortTypes[position].keys.first);
+                      });
+                }),
+          );
+        });
+        homeScreenBloc.add(HomeScreenEvents.loadHabits(selectedFilter));
+      }, child: Icon(Icons.sort)),
     );
   }
 
