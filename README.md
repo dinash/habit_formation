@@ -2,6 +2,18 @@
 
 A Flutter application designed to help users build and track daily habits. The app provides a structured way to select categories, set start dates, and monitor progress over a 21-day period.
 
+## Screenshots
+
+### Core Screens
+|                 Home Screen                 |                Add Habit                |                    Category Selection                     |
+|:-------------------------------------------:|:---------------------------------------:|:---------------------------------------------------------:|
+| ![Home Screen](screenshots/home-screen.png) | ![Add Habit](screenshots/add-habit.png) | ![Category Selection](screenshots/category-selection.png) |
+
+### Habit Completion Marker (Different States)
+|                 Not Started                  | In Progress |                        Already Marked                        |                 Closed                  |
+|:--------------------------------------------:| :---: |:------------------------------------------------------------:|:---------------------------------------:|
+| ![Not Started](screenshots/future-habit.png) | ![In Progress](screenshots/daily-status-tracker.png) | ![Already Marked](screenshots/daily-status-tracker-done.png) | ![Closed](screenshots/closed-habit.png) |
+
 ## Project Overview
 
 The Habit Formation app allows users to:
