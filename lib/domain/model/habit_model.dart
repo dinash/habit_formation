@@ -7,7 +7,7 @@ part 'habit_model.freezed.dart';
 @freezed
 abstract class HabitModel with _$HabitModel{
   const HabitModel._();
-  factory HabitModel({required CategoryModel category, required DateTime startDate, required DateTime endDate}) = _HabitModel;
+  factory HabitModel({@Default(0) int id, required CategoryModel category, required DateTime startDate, required DateTime endDate}) = _HabitModel;
 
   String get formattedStartDate => DateFormat(DateFormat.YEAR_MONTH_DAY).format(startDate);
   String get formattedEndDate => DateFormat(DateFormat.YEAR_MONTH_DAY).format(endDate);

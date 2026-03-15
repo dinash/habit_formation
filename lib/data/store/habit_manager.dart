@@ -30,4 +30,8 @@ class HabitManager {
         .watch(triggerImmediately: true)
         .map((query) => query.find());
   }
+
+  Future<HabitEntity> findHabitById(int id) async {
+    return _habitBox.get(id) ?? Future.error("Habit not found");
+  }
 }
