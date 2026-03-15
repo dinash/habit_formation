@@ -53,10 +53,42 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "3:5871837029373257093",
+      "lastPropertyId": "4:395505139853914752",
+      "name": "DailyStatusEntity",
+      "properties": [
+        {
+          "id": "1:7062250537504875209",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:8564495582532677886",
+          "name": "doneToday",
+          "type": 1
+        },
+        {
+          "id": "3:2708272782136281083",
+          "name": "markingDate",
+          "type": 10
+        },
+        {
+          "id": "4:395505139853914752",
+          "name": "habitId",
+          "indexId": "2:755056273395671583",
+          "type": 11,
+          "flags": 520,
+          "relationTarget": "HabitEntity"
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "2:5996859516766612641",
-  "lastIndexId": "1:6198210384285240203",
+  "lastEntityId": "3:5871837029373257093",
+  "lastIndexId": "2:755056273395671583",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
