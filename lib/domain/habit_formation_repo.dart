@@ -11,4 +11,5 @@ abstract class HabitFormationRepo {
 
   void markDoneForToday(HabitModel habitModel);
   Future<List<DailyStatusModel>> getAllStatusOf(HabitModel habitModel);
+  Future<String> lastUpdatedDate();
 }

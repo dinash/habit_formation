@@ -89,6 +89,11 @@ class HabitFormationRepoImpl extends HabitFormationRepo {
     }
   }
 
+  @override
+  Future<String> lastUpdatedDate() async {
+    return dailyStatusManager.lastUpdatedDate();
+  }
+
   bool _isSameDay(DateTime a, DateTime b) {
     return a.year == b.year &&
         a.month == b.month &&

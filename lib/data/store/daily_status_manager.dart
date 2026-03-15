@@ -2,6 +2,7 @@ import 'package:habit_formation/data/entity/daily_status_entity.dart';
 import 'package:habit_formation/data/entity/habit_entity.dart';
 import 'package:habit_formation/data/store/habit_formation_store.dart';
 import 'package:injectable/injectable.dart' hide Order;
+import 'package:intl/intl.dart';
 
 import '../../objectbox.g.dart';
 
@@ -27,5 +28,16 @@ class DailyStatusManager {
     final dailyStatus = DailyStatusEntity(doneToday: true, markingDate: today);
     dailyStatus.habit.target = habit;
     dailyStatusBox.put(dailyStatus);
+  }
+
+  Future<String> lastUpdatedDate() {
+    return dailyStatusBox
+        .query()
+        .order(DailyStatusEntity_.markingDate, flags: Order.descending)
+        .watch(triggerImmediately: true)
+        .map((query) {
+          var dateTime = query.find().first.markingDate;
+          return DateFormat(DateFormat.YEAR_MONTH_DAY).format(dateTime);
+        }).first;
   }
 }

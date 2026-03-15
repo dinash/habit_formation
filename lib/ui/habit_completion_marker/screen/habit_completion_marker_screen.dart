@@ -10,6 +10,7 @@ import 'package:habit_formation/ui/habit_completion_marker/habit_completion_mark
 import 'package:habit_formation/ui/habit_completion_marker/states/habit_completion_marker_states.dart';
 import 'package:habit_formation/ui/habit_completion_marker/states/habit_completion_marker_ui_state.dart';
 import 'package:habit_formation/ui/util/category_ui_model.dart';
+import 'package:intl/intl.dart';
 
 import '../../../component/bold_text_widget.dart';
 
@@ -54,15 +55,17 @@ class HabitCompletionMarkerScreen extends StatelessWidget {
                               itemBuilder: (BuildContext context, int index) {
                                 return TextButton.icon(
                                   style: TextButton.styleFrom(
-                                    side: BorderSide(color: Colors.blue, width: 2), // border
+                                    side: BorderSide(
+                                        color: Colors.blue, width: 2),
                                     shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(8), // rounded corners
+                                      borderRadius: BorderRadius.circular(8),
                                     ),
                                     padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                                   ),
                                   onPressed: null,
                                   label: Text(
-                                    data[index].markingDate.toString(),
+                                    DateFormat(DateFormat.YEAR_MONTH_DAY)
+                                        .format(data[index].markingDate),
                                   ),
                                   icon: data[index].doneToday
                                       ? Icon(Icons.check_circle,color: Colors.green,)

@@ -3,10 +3,10 @@ import 'package:habit_formation/app_router.dart';
 import 'package:habit_formation/data/store/habit_formation_store.dart';
 import 'package:habit_formation/injection/getit_setup.dart';
 
-void main() {
+void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   configureDependencies();
-  getIt<HabitFormationStore>().createStore();
+  await getIt<HabitFormationStore>().createStore();
   runApp(MyApp());
 }
 
