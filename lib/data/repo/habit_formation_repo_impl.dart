@@ -69,8 +69,7 @@ class HabitFormationRepoImpl extends HabitFormationRepo {
     try {
       final habitEntity = await habitManager.findHabitById(habitModel.id);
       List<DailyStatusModel> result = [];
-      final statuses = dailyStatusManager.getStatusOf(habitEntity);
-      List<DailyStatusEntity> list = await statuses.first;
+      List<DailyStatusEntity> list = await dailyStatusManager.getStatusOf(habitEntity).first;
 
       for (DateTime d = habitEntity.startDate;
       !d.isAfter(habitEntity.endDate);

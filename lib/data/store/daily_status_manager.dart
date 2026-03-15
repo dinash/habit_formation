@@ -26,7 +26,6 @@ class DailyStatusManager {
     final today = DateTime.now();
     final dailyStatus = DailyStatusEntity(doneToday: true, markingDate: today);
     dailyStatus.habit.target = habit;
-
     dailyStatusBox.put(dailyStatus);
   }
 }

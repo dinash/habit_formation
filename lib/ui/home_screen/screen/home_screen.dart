@@ -42,7 +42,7 @@ class HomeScreen extends StatelessWidget {
                     return ListView.builder(
                         itemCount: habits.length,
                         itemBuilder: (BuildContext buildContext, int position) {
-                          return habitTile(habits[position]);
+                          return habitTile(context, habits[position]);
                         });
                   }
                   else {
@@ -81,7 +81,7 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Card habitTile(HabitModel habit) {
+  Card habitTile(BuildContext context, HabitModel habit) {
     return Card(
       child: ListTile(
         title: BoldTextWidget(
@@ -98,7 +98,7 @@ class HomeScreen extends StatelessWidget {
         isThreeLine: false,
         trailing: Icon(Icons.chevron_right),
         onTap: () {
-
+          AutoRouter.of(context).navigate(HabitCompletionMarkerRoute(habitModel: habit));
         },
       ),
     );

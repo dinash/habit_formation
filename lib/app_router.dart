@@ -7,6 +7,7 @@ class AppRouter extends RootStackRouter {
   List<AutoRoute> get routes => [
     AutoRoute(page: SplashRoute.page, initial: true),
     AutoRoute(page: HomeRoute.page),
-    AutoRoute(page: AddHabitRoute.page)
+    AutoRoute(page: AddHabitRoute.page),
+    AutoRoute(page: HabitCompletionMarkerRoute.page)
   ];
 }
