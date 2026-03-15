@@ -1,5 +1,6 @@
 import 'package:habit_formation/data/store/habit_formation_store.dart';
-import 'package:injectable/injectable.dart';
+import 'package:habit_formation/domain/model/sort_type.dart';
+import 'package:injectable/injectable.dart' hide Order;
 
 import '../../objectbox.g.dart';
 import '../entity/habit_entity.dart';
@@ -16,9 +17,32 @@ class HabitManager {
     return _habitBox.put(habitEntity);
   }
 
-  Stream<List<HabitEntity>> getAllHabit() {
+  Stream<List<HabitEntity>> getAllHabit({SortType? sortType}) {
+    var field = HabitEntity_.id;
+    var order = 0;
+    final finalSortType = sortType ?? SortType.defaultSort();
+    field = switch(finalSortType.sortField){
+      SortField.byAddedDate => HabitEntity_.id,
+      SortField.byStartDate => HabitEntity_.startDate,
+      SortField.byEndDate => HabitEntity_.endDate,
+      SortField.byCategory => HabitEntity_.category
+    };
+
+    if (finalSortType.sortOrder case SortOrder.descending) {
+      order = Order.descending;
+    }
+    if(field == HabitEntity_.category){
+      return _habitBox
+          .query()
+          .watch(triggerImmediately: true)
+          .map((query) {
+            return query.find()..sort((a, b) => (a.category.target?.name ?? "").compareTo(b.category.target?.name ?? ""));
+          });
+    }
+
     return _habitBox
         .query()
+        .order(field, flags: order)
         .watch(triggerImmediately: true)
         .map((query) => query.find());
   }
@@ -26,7 +50,7 @@ class HabitManager {
   Stream<List<HabitEntity>> getAllHabitSortedByDate(){
     return _habitBox
         .query()
-        .order(HabitEntity_.startDate)
+        .order(HabitEntity_.startDate, flags: Order.descending)
         .watch(triggerImmediately: true)
         .map((query) => query.find());
   }

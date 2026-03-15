@@ -29,16 +29,5 @@ class CategoryManager {
   Future<List<int>> insertDefaultCategory() async {
     List<CategoryEntity> list = CategoryTypes.values.map((e) => CategoryEntity(name: e.name)).toList(growable: false);
     return categoryBox.putMany(list);
-    // return categoryBox.putMany([
-    //   CategoryEntity(name: "Exercise / Workout"),
-    //   CategoryEntity(name: "Running / Walking / Cycling"),
-    //   CategoryEntity(name: "Stretching / Yoga"),
-    //   CategoryEntity(name: "Drink water regularly"),
-    //   CategoryEntity(name: "Eat fruits & vegetables"),
-    //   CategoryEntity(name: "Sleep on time"),
-    //   CategoryEntity(name: "Meditation / Mindfulness"),
-    //   CategoryEntity(name: "Read a book"),
-    //   CategoryEntity(name: "Listen to music"),
-    // ]);
   }
 }
