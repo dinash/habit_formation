@@ -13,6 +13,7 @@ abstract class AddHabitStates with _$AddHabitStates {
     CategoryModel? category,
     required DateTime startDate,
     required DateTime endDate,
+    @Default(false) bool canSave,
   }) =_AddHabitStates;
 
   factory AddHabitStates.initial() {

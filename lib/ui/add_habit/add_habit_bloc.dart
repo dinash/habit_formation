@@ -15,7 +15,7 @@ class AddHabitBloc extends Bloc<AddHabitEvents, AddHabitStates> {
       event.map(
         initial: (initial) => emit(AddHabitStates.initial()),
         onCategorySelected: (onCategorySelected) =>
-            emit(state.copyWith(category: onCategorySelected.selectedCategory)),
+            emit(state.copyWith(category: onCategorySelected.selectedCategory, canSave: true)),
         onStartDateSelected: (onStartDateSelected) => emit(
           state.copyWith(
             startDate: onStartDateSelected.selectedStartDate,
