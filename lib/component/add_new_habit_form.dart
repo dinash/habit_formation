@@ -10,14 +10,9 @@ import 'package:intl/intl.dart';
 
 import '../ui/add_habit/states/add_habit_states.dart';
 
-class AddNewHabitForm extends StatefulWidget {
-  const AddNewHabitForm({super.key});
+class AddNewHabitForm extends StatelessWidget {
+  AddNewHabitForm({super.key});
 
-  @override
-  State<AddNewHabitForm> createState() => _AddNewHabitFormState();
-}
-
-class _AddNewHabitFormState extends State<AddNewHabitForm> {
   String formatDateTime(DateTime date) {
     return DateFormat(DateFormat.YEAR_MONTH_DAY).format(date);
   }
@@ -25,7 +20,6 @@ class _AddNewHabitFormState extends State<AddNewHabitForm> {
   final TextEditingController _startDateController = TextEditingController();
   final TextEditingController _endDateController = TextEditingController();
   final FocusNode _focusNode = FocusNode();
-
 
   @override
   Widget build(BuildContext context) {
@@ -43,23 +37,7 @@ class _AddNewHabitFormState extends State<AddNewHabitForm> {
                     children: [
                       Expanded(
                         child: OutlinedButton(
-                          onPressed: () async {
-                            final selectedCategory =
-                            await showModalBottomSheet<CategoryModel>(
-                              context: context,
-                              builder: (buildContext) =>
-                                  CategorySelectionScreen(),
-                            );
-                            if (state.category != null &&
-                                selectedCategory == null) {
-                              return;
-                            }
-                            if (selectedCategory != null) {
-                              addHabitBloc.add(
-                                  AddHabitEvents.onCategorySelected(
-                                      selectedCategory));
-                            }
-                          },
+                          onPressed: () async => await handleCategoryPicker(context, addHabitBloc),
                           child: BoldTextWidget(text: state.category?.name ??
                               "Select a category"),
                         ),
@@ -74,20 +52,7 @@ class _AddNewHabitFormState extends State<AddNewHabitForm> {
                     ),
                     controller: _startDateController,
                     readOnly: true,
-                    onTap: () async {
-                      final DateTime? newlySelectedStartDate = await showDatePicker(
-                        initialDate: state.startDate,
-                        firstDate: state.today,
-                        lastDate: DateTime.now().add(Duration(days: 365)),
-                        context: context,
-                      );
-                      if (newlySelectedStartDate != null) {
-                        addHabitBloc.add(AddHabitEvents.onStartDateSelected(
-                            newlySelectedStartDate));
-
-                        _focusNode.unfocus();
-                      }
-                    },
+                    onTap: () async => await startDatePickerHandling(state, context, addHabitBloc),
                   ),
                   TextField(
                     decoration: InputDecoration(
@@ -116,5 +81,35 @@ class _AddNewHabitFormState extends State<AddNewHabitForm> {
         _endDateController.text = formatDateTime(state.endDate);
       },
     );
+  }
+
+  Future<void> startDatePickerHandling(AddHabitStates state, BuildContext context, AddHabitBloc addHabitBloc) async {
+    final DateTime? newlySelectedStartDate = await showDatePicker(
+      initialDate: state.startDate,
+      firstDate: state.today,
+      lastDate: DateTime.now().add(Duration(days: 365)),
+      context: context,
+    );
+    if (newlySelectedStartDate != null) {
+      addHabitBloc.add(AddHabitEvents.onStartDateSelected(
+          newlySelectedStartDate));
+
+      _focusNode.unfocus();
+    }
+  }
+
+  Future<void> handleCategoryPicker(BuildContext context, AddHabitBloc addHabitBloc) async {
+    final selectedCategory =
+    await showModalBottomSheet<CategoryModel>(
+      context: context,
+      builder: (buildContext) =>
+          CategorySelectionScreen(),
+    );
+
+    if (selectedCategory != null) {
+      addHabitBloc.add(
+          AddHabitEvents.onCategorySelected(
+              selectedCategory));
+    }
   }
 }
