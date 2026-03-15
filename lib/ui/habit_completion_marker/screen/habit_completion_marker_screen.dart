@@ -1,6 +1,7 @@
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:habit_formation/data/category_list.dart';
 import 'package:habit_formation/domain/model/habit_model.dart';
 import 'package:habit_formation/domain/model/habit_tracking_status.dart';
 import 'package:habit_formation/injection/getit_setup.dart';
@@ -8,6 +9,7 @@ import 'package:habit_formation/ui/habit_completion_marker/events/habit_completi
 import 'package:habit_formation/ui/habit_completion_marker/habit_completion_marker_bloc.dart';
 import 'package:habit_formation/ui/habit_completion_marker/states/habit_completion_marker_states.dart';
 import 'package:habit_formation/ui/habit_completion_marker/states/habit_completion_marker_ui_state.dart';
+import 'package:habit_formation/ui/util/category_ui_model.dart';
 
 import '../../../component/bold_text_widget.dart';
 
@@ -88,29 +90,41 @@ class HabitCompletionMarkerScreen extends StatelessWidget {
     HabitCompletionMarkerUiState uiState,
     HabitCompletionMarkerBloc habitCompletionMarkerBloc,
   ) {
+    final category = CategoryTypes.values.firstWhere((element) =>
+    element.name == habit.category.name,
+        orElse: () => CategoryTypes.runningWalkingCycling);
+    var backgroundColor = CategoryUiModel.getColorScheme(category);
+    var foregroundColorFor = CategoryUiModel.getForegroundColorFor(
+        backgroundColor);
     return Card(
+      color: backgroundColor,
       elevation: 4.0,
       child: Container(
         padding: EdgeInsets.all(8.0),
         width: double.infinity,
         child: Column(
           children: [
-            Icon(Icons.home, size: 50),
+            Icon(CategoryUiModel.getIcon(category), color: foregroundColorFor,
+                size: 50),
             BoldTextWidget(
               text: habit.category.name,
               textAlign: TextAlign.left,
               fontSize: 20,
+              textColor: foregroundColorFor,
             ),
             Text(
               "Start Date: ${habit.formattedStartDate}",
               textAlign: TextAlign.left,
+              style: TextStyle(color: foregroundColorFor,),
             ),
             Text(
               "End Date: ${habit.formattedEndDate}",
               textAlign: TextAlign.left,
+              style: TextStyle(color: foregroundColorFor,),
             ),
             SizedBox.fromSize(size: Size(50, 50)),
-            canMarkCompletion(uiState, habitCompletionMarkerBloc, habit),
+            canMarkCompletion(
+                uiState, habitCompletionMarkerBloc, habit, backgroundColor),
           ],
         ),
       ),
@@ -120,7 +134,7 @@ class HabitCompletionMarkerScreen extends StatelessWidget {
   Widget canMarkCompletion(
     HabitCompletionMarkerUiState uiState,
     HabitCompletionMarkerBloc habitCompletionMarkerBloc,
-    HabitModel habit,
+      HabitModel habit, ColorSwatch<int> backgroundColor,
   ) {
     switch (uiState.habitStatus) {
       case HabitTrackingStatus.notStarted:
@@ -131,7 +145,11 @@ class HabitCompletionMarkerScreen extends StatelessWidget {
         }
       case HabitTrackingStatus.inProgress:
         {
-          return FilledButton(
+          return FilledButton.icon(
+            icon: Icon(Icons.check),
+            style: FilledButton.styleFrom(
+                backgroundColor: CategoryUiModel.primaryButtonColor(
+                    backgroundColor)),
             onPressed: uiState.alreadyMarked
                 ? null
                 : () {
@@ -139,7 +157,7 @@ class HabitCompletionMarkerScreen extends StatelessWidget {
                       HabitCompletionMarkerEvents.markDoneForToday(habit),
                     );
                   },
-            child: Text("Mark done Today"),
+            label: Text("Mark done Today"),
           );
         }
       case HabitTrackingStatus.closed:
