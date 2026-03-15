@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:habit_formation/injection/getit_setup.dart';
 
-import '../component/bottom_sheet_circular_loader.dart';
-import '../component/category_list_widget.dart';
-import '../component/generic_error_widget.dart';
-import 'category_selection/category_selection_bloc.dart';
+import '../../../component/bottom_sheet_circular_loader.dart';
+import '../../../component/category_list_widget.dart';
+import '../../../component/generic_error_widget.dart';
+import '../category_selection_bloc.dart';
 
 class CategorySelectionScreen extends StatelessWidget {
   const CategorySelectionScreen({super.key});

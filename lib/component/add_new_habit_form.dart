@@ -5,10 +5,9 @@ import 'package:habit_formation/domain/model/category_model.dart';
 import 'package:habit_formation/injection/getit_setup.dart';
 import 'package:habit_formation/ui/add_habit/add_habit_bloc.dart';
 import 'package:habit_formation/ui/add_habit/events/add_habit_events.dart';
-import 'package:habit_formation/ui/category_selection_screen.dart';
+import 'package:habit_formation/ui/add_habit/states/add_habit_states.dart';
+import 'package:habit_formation/ui/category_selection/screen/category_selection_screen.dart';
 import 'package:intl/intl.dart';
-
-import '../ui/add_habit/states/add_habit_states.dart';
 
 class AddNewHabitForm extends StatelessWidget {
   AddNewHabitForm({super.key});

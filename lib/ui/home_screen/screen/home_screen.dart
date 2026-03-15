@@ -8,9 +8,9 @@ import 'package:habit_formation/injection/getit_setup.dart';
 import 'package:habit_formation/ui/home_screen/events/home_screen_events.dart';
 import 'package:habit_formation/ui/home_screen/home_screen_bloc.dart';
 
-import '../component/bold_text_widget.dart';
-import '../component/bottom_sheet_circular_loader.dart';
-import 'home_screen/states/home_screen_states.dart';
+import '../../../component/bold_text_widget.dart';
+import '../../../component/bottom_sheet_circular_loader.dart';
+import '../states/home_screen_states.dart';
 
 @RoutePage()
 class HomeScreen extends StatelessWidget {
@@ -39,22 +39,11 @@ class HomeScreen extends StatelessWidget {
                   else if (snapshot.hasData) {
                     List<HabitModel> habits = snapshot.data?.toList() ??
                         List.empty();
-                    return ListView(
-                      shrinkWrap: true,
-                      children: ListTile.divideTiles(
-                        context: context,
-                        tiles: habits.map(
-                              (habit) =>
-                              ListTile(
-                                title: BoldTextWidget(
-                                    text: habit.category.name),
-                                onTap: () {
-
-                                },
-                              ),
-                        ),
-                      ).toList(),
-                    );
+                    return ListView.builder(
+                        itemCount: habits.length,
+                        itemBuilder: (BuildContext buildContext, int position) {
+                          return habitTile(habits[position]);
+                        });
                   }
                   else {
                     return SafeArea(
@@ -88,6 +77,29 @@ class HomeScreen extends StatelessWidget {
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Card habitTile(HabitModel habit) {
+    return Card(
+      child: ListTile(
+        title: BoldTextWidget(
+          text: habit.category.name, textAlign: TextAlign.left, fontSize: 20,),
+        leading: Icon(Icons.home, size: 50),
+        subtitle: Column(crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text("Start Date: ${habit.formattedStartDate}",
+              textAlign: TextAlign.left,),
+            Text("End Date: ${habit.formattedEndDate}",
+                textAlign: TextAlign.left),
+          ],
+        ),
+        isThreeLine: false,
+        trailing: Icon(Icons.chevron_right),
+        onTap: () {
+
+        },
       ),
     );
   }
