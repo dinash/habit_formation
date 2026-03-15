@@ -9,8 +9,8 @@ class HomeScreenBloc extends Bloc<HomeScreenEvents, HomeScreenStates> {
   HabitFormationRepo repo;
 
   HomeScreenBloc({required this.repo}) : super(HomeScreenStates.loading()) {
-    on<HomeScreenEvents>((event, emit) {
-      event.map(loadHabits: (loadHabits) async => _getAllHabits(event, emit));
+    on<HomeScreenEvents>((event, emit) async {
+      await event.map(loadHabits: (loadHabits) async => _getAllHabits(event, emit));
     });
   }
 

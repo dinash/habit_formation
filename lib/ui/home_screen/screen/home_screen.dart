@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:habit_formation/app_router.gr.dart';
 import 'package:habit_formation/component/generic_error_widget.dart';
+import 'package:habit_formation/constants/asset_constants.dart';
 import 'package:habit_formation/data/category_list.dart';
 import 'package:habit_formation/domain/model/habit_model.dart';
 import 'package:habit_formation/domain/model/sort_type.dart';
@@ -10,6 +11,7 @@ import 'package:habit_formation/injection/getit_setup.dart';
 import 'package:habit_formation/ui/home_screen/events/home_screen_events.dart';
 import 'package:habit_formation/ui/home_screen/home_screen_bloc.dart';
 import 'package:habit_formation/ui/util/category_ui_model.dart';
+import 'package:lottie/lottie.dart';
 
 import '../../../component/bold_text_widget.dart';
 import '../../../component/bottom_sheet_circular_loader.dart';
@@ -30,7 +32,7 @@ class HomeScreen extends StatelessWidget {
             ..add(HomeScreenEvents.loadHabits(SortType.defaultSort())),
           builder: (BuildContext buildContext, HomeScreenStates state) {
             return state.when(loading: () {
-              return Center(
+              return Center(heightFactor: 2,
                 child: CircularProgressIndicator(),
               );
             }, loaded: (habitStream) {
@@ -44,6 +46,20 @@ class HomeScreen extends StatelessWidget {
                   else if (snapshot.hasData) {
                     List<HabitModel> habits = snapshot.data?.toList() ??
                         List.empty();
+                    if(habits.isEmpty){
+                      return Padding(
+                        padding: EdgeInsetsGeometry.all(16),
+                        child: Column(
+                          children: [
+                            Lottie.asset(
+                              AssetConstants.kHabitEmptyState,
+                              repeat: true,
+                            ),
+                            BoldTextWidget(text: "Add a habit to get started!"),
+                          ],
+                        ),
+                      );
+                    }
                     return ListView.builder(
                         itemCount: habits.length,
                         itemBuilder: (BuildContext buildContext, int position) {
