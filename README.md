@@ -66,3 +66,6 @@ This project follows **Clean Architecture** principles to ensure a separation of
     ```bash
     flutter run
     ```
+
+---
+> **Note**: This project has been validated on **Android** only for now due to infrastructure limitations.
