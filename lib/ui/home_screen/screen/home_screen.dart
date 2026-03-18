@@ -116,7 +116,9 @@ class HomeScreen extends StatelessWidget {
                 }),
           );
         });
-        homeScreenBloc.add(HomeScreenEvents.loadHabits(selectedFilter));
+        if(selectedFilter != null) {
+          homeScreenBloc.add(HomeScreenEvents.loadHabits(selectedFilter));
+        }
       }, child: Icon(Icons.sort)),
     );
   }
